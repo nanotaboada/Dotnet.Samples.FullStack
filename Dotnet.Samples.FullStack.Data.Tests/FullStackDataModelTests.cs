@@ -9,7 +9,7 @@ namespace Dotnet.Samples.FullStack.Data.Tests
     [TestClass]
     public class FullStackDataModelTests
     {
-        [TestMethod]
+        [TestMethod][Ignore]
         public void GivenDbContext_WhenSelectingAllItemsInDbSet_ThenResultShouldNotBeEmpty()
         {
             // Arrange
