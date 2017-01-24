@@ -1,6 +1,6 @@
 Status
 ------
-[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/nanotaboada/dotnet-samples-fullstack)
+[![Build status](https://ci.appveyor.com/api/projects/status/0grgl646rs7s860o?svg=true)](https://ci.appveyor.com/project/nanotaboada/dotnet-samples-fullstack)
 
 Manifesto
 ---------
