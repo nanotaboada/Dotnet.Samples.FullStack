@@ -63,7 +63,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         [Route("api/books")]
         public IHttpActionResult Post([FromBody]Book book)
         {
-            if (!this.bookService.IsValidIsbn(book.Isbn))
+            if (!this.bookService.IsValidIsbn13(book.Isbn))
             {
                 return BadRequest();
             }
@@ -127,8 +127,8 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// </returns>
         public IHttpActionResult Put(string isbn, [FromBody]Book book)
         {
-            if (!this.bookService.IsValidIsbn(isbn)
-                || !this.bookService.IsValidIsbn(book.Isbn)
+            if (!this.bookService.IsValidIsbn13(isbn)
+                || !this.bookService.IsValidIsbn13(book.Isbn)
                 || (isbn != book.Isbn))
             {
                 return BadRequest();
@@ -165,7 +165,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// <param name="isbn">The ISBN of a Book.</param>
         public IHttpActionResult Delete(string isbn)
         {
-            if (!this.bookService.IsValidIsbn(isbn))
+            if (!this.bookService.IsValidIsbn13(isbn))
             {
                 return NotFound();
             }

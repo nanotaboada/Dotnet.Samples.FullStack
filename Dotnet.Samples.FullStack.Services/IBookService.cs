@@ -21,6 +21,6 @@ namespace Dotnet.Samples.FullStack.Services
         void Delete(string isbn);
 
         // Validation
-        bool IsValidIsbn(string isbn);
+        bool IsValidIsbn13(string isbn);
     }
 }

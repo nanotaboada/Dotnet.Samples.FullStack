@@ -40,10 +40,10 @@ namespace Dotnet.Samples.FullStack.Services.Mocks
             return;
         }
 
-        public bool IsValidIsbn(string isbn)
+        public bool IsValidIsbn13(string isbn)
         {
             // TODO: Improve this implementation with real ISBN validation.
-            return !string.IsNullOrWhiteSpace(isbn);
+            return true;
         }
     }
 }
