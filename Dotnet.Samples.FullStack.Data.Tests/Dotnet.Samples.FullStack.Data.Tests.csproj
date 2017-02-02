@@ -73,7 +73,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BookStub.cs" />
-    <Compile Include="FullStackDataModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

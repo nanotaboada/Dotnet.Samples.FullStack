@@ -43,7 +43,7 @@ namespace Dotnet.Samples.FullStack.Data.Tests
             var ean = "978";
             var group = random.Next(0, 2).ToString("0");
             var publisher = random.Next(200, 699).ToString("000");
-            var title = random.Next(0, 1000000).ToString("000000");
+            var title = random.Next(0, 99999).ToString("00000");
             var check = random.Next(0, 10).ToString("0"); // Not a real checksum!
 
             return string.Format("{0}-{1}-{2}-{3}-{4}", ean, group, publisher, title, check);
