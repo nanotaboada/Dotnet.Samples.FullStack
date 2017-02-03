@@ -58,7 +58,7 @@ namespace Dotnet.Samples.FullStack.Data
 
         public virtual void Delete(params object[] keyValues)
         {
-            Book entity = this.Set.Find(keyValues);
+            var entity = this.Set.Find(keyValues);
 
             if (entity != null)
             {

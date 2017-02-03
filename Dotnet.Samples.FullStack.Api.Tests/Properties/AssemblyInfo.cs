@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Dotnet.Samples.FullStack.Api.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Proof of Concept for an end-to-end .NET application")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Codevel Micro-ISV")]
 [assembly: AssemblyProduct("Dotnet.Samples.FullStack.Api.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2017 Codevel Micro-ISV")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
