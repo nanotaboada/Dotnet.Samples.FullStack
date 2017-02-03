@@ -42,6 +42,7 @@
     <Compile Include="BookService.cs" />
     <Compile Include="IBookService.cs" />
     <Compile Include="ObjectCacheService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

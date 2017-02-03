@@ -40,3 +40,4 @@ _TeamCity*
 !*.[Cc]ache/
 
 .DS_Store
+*.DotSettings

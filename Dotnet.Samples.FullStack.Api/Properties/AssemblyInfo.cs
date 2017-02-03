@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Dotnet.Samples.FullStack")]
 [assembly: AssemblyDescription("Proof of Concept for an end-to-end .NET application")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Codevel Micro-ISV")]
 [assembly: AssemblyProduct("Dotnet.Samples.FullStack")]
-[assembly: AssemblyCopyright("Copyright © 2017")]
+[assembly: AssemblyCopyright("Copyright ©  2017 Codevel Micro-ISV")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
