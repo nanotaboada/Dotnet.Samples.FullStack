@@ -84,7 +84,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             // Arrange
             var book = BookStub.CreateNew();
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(book.Isbn)).Returns(true);
+            service.Setup(s => s.IsValidIsbn(book.Isbn)).Returns(true);
             service.Setup(s => s.RetrieveByIsbn(book.Isbn)).Returns(book);
             service.Setup(s => s.Create(book));
             var controller = new BookController(service.Object);
@@ -104,7 +104,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             // Arrange
             var book = BookStub.CreateNew();
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(book.Isbn)).Returns(true);
+            service.Setup(s => s.IsValidIsbn(book.Isbn)).Returns(true);
             service.Setup(s => s.RetrieveByIsbn(book.Isbn)).Returns(null as Book);
             service.Setup(s => s.Create(book)).Returns(1);
             var controller = new BookController(service.Object);
@@ -175,7 +175,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             string isbn = null;
             var book = BookStub.CreateNew();
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(false);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(false);
             service.Setup(s => s.Update(book));
             var controller = new BookController(service.Object);
 
@@ -196,7 +196,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             var isbn = book.Isbn;
             book.Isbn = null;
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(false);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(false);
             service.Setup(s => s.Update(book));
             var controller = new BookController(service.Object);
 
@@ -216,7 +216,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             var isbn = BookStub.CreateNew().Isbn;
             book.Isbn = null;
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(false);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(false);
             service.Setup(s => s.Update(book));
             var controller = new BookController(service.Object);
 
@@ -235,7 +235,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             var book = BookStub.CreateNew();
             var isbn = book.Isbn;
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(true);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(true);
             service.Setup(s => s.Update(book));
             service.Setup(s => s.RetrieveByIsbn(book.Isbn)).Returns(null as Book);
             var controller = new BookController(service.Object);
@@ -255,7 +255,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             var book = BookStub.CreateNew();
             var isbn = book.Isbn;
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(true);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(true);
             service.Setup(s => s.Update(book));
             service.Setup(s => s.RetrieveByIsbn(book.Isbn)).Returns(book);
             var controller = new BookController(service.Object);
@@ -296,7 +296,7 @@ namespace Dotnet.Samples.FullStack.Api.Tests
             // Arrange
             var isbn = BookStub.CreateNew().Isbn;
             var service = new Mock<IBookService>();
-            service.Setup(s => s.IsValidIsbn13(isbn)).Returns(true);
+            service.Setup(s => s.IsValidIsbn(isbn)).Returns(true);
             service.Setup(s => s.Delete(isbn));
             var controller = new BookController(service.Object);
 

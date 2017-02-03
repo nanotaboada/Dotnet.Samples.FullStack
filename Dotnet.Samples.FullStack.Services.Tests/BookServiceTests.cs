@@ -12,6 +12,8 @@ namespace Dotnet.Samples.FullStack.Services.Tests
         private static readonly int SIZE = 10;
         private static readonly bool IN_STOCK = true;
 
+        #region CRUD
+
         #region Create
 
         [TestMethod]
@@ -26,7 +28,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             service.Create(It.IsAny<Book>());
 
             // Assert
-            repository.Verify(r => r.Insert(It.IsAny<Book>()), Times.Exactly(1));
+            repository.Verify(r => r.Create(It.IsAny<Book>()), Times.Exactly(1));
             repository.Verify(r => r.SaveChanges(), Times.Exactly(1));
         }
 
@@ -41,7 +43,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             var book = BookStub.CreateNew();
 
             var repository = new Mock<IRepository<Book>>();
-            repository.Setup(r => r.GetById(book.Isbn))
+            repository.Setup(r => r.Retrieve(book.Isbn))
                 .Returns(book);
 
             var service = new BookService(repository.Object);
@@ -51,7 +53,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
 
             // Assert
             result.ShouldBeEquivalentTo(book);
-            repository.Verify(r => r.GetById(book.Isbn), Times.Exactly(1));
+            repository.Verify(r => r.Retrieve(book.Isbn), Times.Exactly(1));
         }
 
         [TestMethod]
@@ -61,7 +63,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             var books = BookStub.CreateListOfSize(SIZE);
 
             var repository = new Mock<IRepository<Book>>();
-            repository.Setup(r => r.Get(null, null))
+            repository.Setup(r => r.Retrieve())
                 .Returns(books);
 
             var service = new BookService(repository.Object);
@@ -71,7 +73,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
 
             // Assert
             results.ShouldAllBeEquivalentTo(books);
-            repository.Verify(r => r.Get(null, null), Times.Exactly(1));
+            repository.Verify(r => r.Retrieve(), Times.Exactly(1));
         }
 
         [TestMethod]
@@ -81,7 +83,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             var books = BookStub.CreateListOfSize(SIZE, IN_STOCK);
 
             var repository = new Mock<IRepository<Book>>();
-            repository.Setup(r => r.Get(book => book.InStock == true, null, null))
+            repository.Setup(r => r.Retrieve(book => book.InStock == true))
                 .Returns(books);
 
             var service = new BookService(repository.Object);
@@ -91,7 +93,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
 
             // Assert
             results.ShouldAllBeEquivalentTo(books);
-            repository.Verify(r => r.Get(book => book.InStock == true, null, null), Times.Exactly(1));
+            repository.Verify(r => r.Retrieve(book => book.InStock == true), Times.Exactly(1));
         }
 
         [TestMethod]
@@ -101,7 +103,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             var books = BookStub.CreateListOfSize(SIZE, IN_STOCK);
 
             var repository = new Mock<IRepository<Book>>();
-            repository.Setup(r => r.Get(book => book.InStock == true, null, null))
+            repository.Setup(r => r.Retrieve(book => book.InStock == true))
                 .Returns(books);
 
             var service = new BookService(repository.Object);
@@ -112,7 +114,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
 
             // Assert
             cachedResults.ShouldAllBeEquivalentTo(results);
-            repository.Verify(r => r.Get(book => book.InStock == true, null, null), Times.Exactly(1));
+            repository.Verify(r => r.Retrieve(book => book.InStock == true), Times.Exactly(1));
         }
 
         #endregion
@@ -126,7 +128,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             var book = BookStub.CreateNew();
 
             var repository = new Mock<IRepository<Book>>();
-            repository.Setup(r => r.GetById(book.Isbn))
+            repository.Setup(r => r.Retrieve(book.Isbn))
                 .Returns(book);
 
             var service = new BookService(repository.Object);
@@ -156,6 +158,42 @@ namespace Dotnet.Samples.FullStack.Services.Tests
             // Assert
             repository.Verify(r => r.Delete(It.IsAny<string>()), Times.Exactly(1));
             repository.Verify(r => r.SaveChanges(), Times.Exactly(1));
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Validation
+
+        [TestMethod]
+        public void GivenIsValidIsbn_WhenIsbnIsValid_ThenShouldReturnTrue()
+        {
+            // Arrange
+            var isbn = BookStub.CreateNew().Isbn;
+            var repository = new Mock<IRepository<Book>>();
+            var service = new BookService(repository.Object);
+
+            // Act
+            var result = service.IsValidIsbn(isbn);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void GivenIsValidIsbn_WhenIsbnIsValid_ThenShouldReturnFalse()
+        {
+            // Arrange
+            var isbn = "INVALID-ISBN-0123456789";
+            var repository = new Mock<IRepository<Book>>();
+            var service = new BookService(repository.Object);
+
+            // Act
+            var result = service.IsValidIsbn(isbn);
+
+            // Assert
+            result.Should().BeFalse();
         }
 
         #endregion
