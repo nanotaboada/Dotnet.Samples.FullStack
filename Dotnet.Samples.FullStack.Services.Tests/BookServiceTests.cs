@@ -182,7 +182,7 @@ namespace Dotnet.Samples.FullStack.Services.Tests
         }
 
         [TestMethod]
-        public void GivenIsValidIsbn_WhenIsbnIsValid_ThenShouldReturnFalse()
+        public void GivenIsValidIsbn_WhenIsbnIsInvalid_ThenShouldReturnFalse()
         {
             // Arrange
             var isbn = "INVALID-ISBN-0123456789";
