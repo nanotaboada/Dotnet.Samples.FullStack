@@ -9,10 +9,14 @@ using System.Transactions;
 
 namespace Dotnet.Samples.FullStack.Data
 {
+    /// <remarks>
+    /// TODO: Refactor this
+    /// http://rob.conery.io/2014/03/04/repositories-and-unitofwork-are-not-a-good-idea/
+    /// </remarks>
     public class BookRepository : IRepository<Book>
     {
-        protected readonly DbContext Context;
-        protected readonly DbSet<Book> Set;
+        protected readonly DbContext Context; // Repository
+        protected readonly DbSet<Book> Set; // Unit of Work
 
         public BookRepository(DbContext context)
         {
@@ -20,135 +24,36 @@ namespace Dotnet.Samples.FullStack.Data
             this.Set = this.Context.Set<Book>();
         }
 
-        public virtual IQueryable<Book> GetQueryable()
+        public virtual void Create(Book book)
         {
-            return Context.Set<Book>().AsQueryable();
+            this.Set.Add(book);
         }
 
-        public virtual IList<Book> Get(
-            Expression<Func<Book, bool>> filter = null,
-            Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null,
-            params Expression<Func<Book, object>>[] includes)
-        {
-            return GetQuery(filter, orderBy, includes).ToList();
-        }
-
-        public PagedQueryResult<Book> GetPaged(
-            int pageNumber,
-            int pageSize,
-            Expression<Func<Book, bool>> filter = null,
-            Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null,
-            params Expression<Func<Book, object>>[] includes)
-        {
-            IQueryable<Book> query = this.GetQuery(filter, orderBy, includes);
-
-            long count = query.LongCount();
-            int totalPages = (int)Math.Ceiling((0D + count) / pageSize);
-
-            query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
-
-            return new PagedQueryResult<Book>()
-            {
-                CurrentPage = pageNumber,
-                PageSize = pageSize,
-                TotalItems = count,
-                TotalPages = totalPages,
-
-                Items = query.ToList()
-            };
-        }
-
-        public PagedQueryResult<Book> GetPaged(
-            int pageNumber,
-            int pageSize,
-            string filter,
-            Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null,
-            params Expression<Func<Book, object>>[] includes)
-        {
-            IQueryable<Book> query = this.GetQuery(filter, orderBy, includes);
-
-            long count = query.LongCount();
-            int totalPages = (int)Math.Ceiling((0D + count) / pageSize);
-
-            if (orderBy != null)
-            {
-                query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
-            }
-
-            return new PagedQueryResult<Book>()
-            {
-                CurrentPage = pageNumber,
-                PageSize = pageSize,
-                TotalItems = count,
-                TotalPages = totalPages,
-
-                Items = query.ToList()
-            };
-        }
-
-        protected virtual IQueryable<Book> GetQuery(
-            string filter,
-            Func<IQueryable<Book>,
-            IOrderedQueryable<Book>> orderBy = null,
-            params Expression<Func<Book, object>>[] includes)
-        {
-            IQueryable<Book> query = this.Set;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query);
-            }
-            else
-            {
-                return query;
-            }
-        }
-
-        protected virtual IQueryable<Book> GetQuery(
-            Expression<Func<Book, bool>> filter = null,
-            Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null,
-            params Expression<Func<Book, object>>[] includes)
-        {
-            IQueryable<Book> query = this.Set;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query);
-            }
-            else
-            {
-                return query;
-            }
-        }
-
-        public virtual Book GetById(params object[] keyValues)
+        public virtual Book Retrieve(params object[] keyValues)
         {
             return this.Set.Find(keyValues);
         }
 
-        public virtual void Insert(Book entity)
+        public virtual IList<Book> Retrieve()
         {
-            this.Set.Add(entity);
+            return this.Set as IList<Book>;
+        }
+
+        public IList<Book> Retrieve(Expression<Func<Book, bool>> predicate)
+        {
+            var query = this.Set as IQueryable<Book>;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return query as IList<Book>;
+        }
+
+        public virtual void Update(Book book)
+        {
+            this.Context.Entry(book).State = EntityState.Modified;
         }
 
         public virtual void Delete(params object[] keyValues)
@@ -157,20 +62,7 @@ namespace Dotnet.Samples.FullStack.Data
 
             if (entity != null)
             {
-                this.Delete(entity);
-            }
-        }
-
-        public virtual void Delete(Book entity)
-        {
-            this.Set.Remove(entity);
-        }
-
-        public void SaveChangesWithScope(TransactionScope scope)
-        {
-            using (scope)
-            {
-                this.Context.SaveChanges();
+                this.Set.Remove(entity);
             }
         }
 
@@ -178,5 +70,6 @@ namespace Dotnet.Samples.FullStack.Data
         {
             return this.Context.SaveChanges();
         }
+
     }
 }

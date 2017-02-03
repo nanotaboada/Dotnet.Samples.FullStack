@@ -6,37 +6,24 @@ using System.Linq.Expressions;
 
 namespace Dotnet.Samples.FullStack.Data
 {
+    /// <remarks>
+    /// TODO: Refactor this
+    /// http://rob.conery.io/2014/03/04/repositories-and-unitofwork-are-not-a-good-idea/
+    /// </remarks>
+    /// <typeparam name="TEntity">The Type</typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
-        IQueryable<TEntity> GetQueryable();
+        void Create(TEntity entity);
 
-        IList<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes);
+        IList<TEntity> Retrieve();
 
-        PagedQueryResult<TEntity> GetPaged(
-            int pageNumber,
-            int pageSize,
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes);
+        IList<TEntity> Retrieve(Expression<Func<TEntity, bool>> predicate);
 
+        TEntity Retrieve(params object[] keyValues);
 
-        PagedQueryResult<TEntity> GetPaged(
-          int pageNumber,
-          int pageSize,
-          string filter = null,
-          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-          params Expression<Func<TEntity, object>>[] includes);
-
-        TEntity GetById(params object[] keyValues);
-
-        void Insert(TEntity entity);
+        void Update(TEntity entity);
 
         void Delete(params object[] keyValues);
-
-        void Delete(TEntity entity);
 
         int SaveChanges();
     }

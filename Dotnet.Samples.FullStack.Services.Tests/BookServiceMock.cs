@@ -40,7 +40,7 @@ namespace Dotnet.Samples.FullStack.Services.Mocks
             return;
         }
 
-        public bool IsValidIsbn13(string isbn)
+        public bool IsValidIsbn(string isbn)
         {
             // TODO: Improve this implementation with real ISBN validation.
             return true;

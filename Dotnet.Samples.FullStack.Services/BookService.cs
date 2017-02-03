@@ -18,7 +18,7 @@ namespace Dotnet.Samples.FullStack.Services
 
         public int Create(Book book)
         {
-            this.bookRepository.Insert(book);
+            this.bookRepository.Create(book);
             return this.bookRepository.SaveChanges();
         }
 
@@ -31,17 +31,17 @@ namespace Dotnet.Samples.FullStack.Services
             // TODO: Discuss this: ISBN is a natural Key of the Book domain but
             // SqlServer favors int over string values for PKs so we might have
             // to implement a Guid as PK approach in the future to avoid issues
-            return this.bookRepository.GetById(isbn);
+            return this.bookRepository.Retrieve(isbn);
         }
 
         public List<Book> RetrieveAll()
         {
-            return this.bookRepository.Get() as List<Book>;
+            return this.bookRepository.Retrieve() as List<Book>;
         }
 
         public List<Book> RetrieveAllInStock()
         {
-            return this.bookRepository.Get(book => book.InStock == true, null, null) as List<Book>;
+            return this.bookRepository.Retrieve(book => book.InStock == true) as List<Book>;
         }
 
         public List<Book> RetrieveAllInStockToday()
@@ -55,7 +55,7 @@ namespace Dotnet.Samples.FullStack.Services
             }
             else
             {
-                books = this.bookRepository.Get(book => book.InStock == true, null, null) as List<Book>;
+                books = this.bookRepository.Retrieve(book => book.InStock == true) as List<Book>;
                 ObjectCacheService.Add(books, BooksService_RetrieveAllInStock_CacheKey);
             }
 
@@ -68,7 +68,7 @@ namespace Dotnet.Samples.FullStack.Services
 
         public void Update(Book book)
         {
-            var current = this.bookRepository.GetById(book.Isbn);
+            var current = this.bookRepository.Retrieve(book.Isbn);
 
             if (current != null)
             {
@@ -91,7 +91,7 @@ namespace Dotnet.Samples.FullStack.Services
 
         #region Validation
 
-        public bool IsValidIsbn13(string isbn)
+        public bool IsValidIsbn(string isbn)
         {
             // https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
             var pattern = @"
