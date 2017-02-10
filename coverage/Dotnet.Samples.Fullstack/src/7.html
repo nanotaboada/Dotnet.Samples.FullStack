@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Api\App_Start\WebApiConfig.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Web.Http;
+
+namespace Dotnet.Samples.FullStack.Api
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            config.EnableCors();
+
+
+            // Attribute routing.
+            config.MapHttpAttributeRoutes();
+
+            // Convention-based routing.
+            config.Routes.MapHttpRoute(
+                name: &quot;DefaultApi&quot;,
+                routeTemplate: &quot;api/{controller}/{id}&quot;,
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,10,0],[9,13,9,33,0],[13,13,13,45,0],[16,13,20,15,0],[21,9,21,10,0]]);
+    </script>
+  </body>
+</html>

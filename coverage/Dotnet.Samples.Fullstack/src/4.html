@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Data\FullStackDataModel.Context.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+//------------------------------------------------------------------------------
+// &lt;auto-generated&gt;
+//    This code was generated from a template.
+//
+//    Manual changes to this file may cause unexpected behavior in your application.
+//    Manual changes to this file will be overwritten if the code is regenerated.
+// &lt;/auto-generated&gt;
+//------------------------------------------------------------------------------
+
+namespace Dotnet.Samples.FullStack.Data
+{
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class FullStackDbContext : DbContext
+    {
+        public FullStackDbContext()
+            : base(&quot;name=FullStackDbContext&quot;)
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public DbSet&lt;Book&gt; Books { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,15,19,46,0],[20,9,20,10,0],[21,9,21,10,0],[24,9,24,10,0],[25,13,25,57,0],[28,36,28,40,0],[28,41,28,45,0]]);
+    </script>
+  </body>
+</html>
