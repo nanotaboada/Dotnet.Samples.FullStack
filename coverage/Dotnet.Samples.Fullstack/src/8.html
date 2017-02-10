@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Api\Global.asax.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Web.Http;
+using Newtonsoft.Json.Serialization;
+
+namespace Dotnet.Samples.FullStack.Api
+{
+    public class WebApiApplication : System.Web.HttpApplication
+    {
+        protected void Application_Start()
+        {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            SimpleInjectorConfiguration.Configure();
+
+            // http://www.asp.net/web-api/overview/formats-and-model-binding/json-and-xml-serialization
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,9,9,10,0],[10,13,10,66,0],[12,13,12,53,0],[15,13,15,124,0],[17,13,17,83,0],[18,13,18,101,0],[19,13,19,86,0],[20,13,20,101,0],[22,9,22,10,0]]);
+    </script>
+  </body>
+</html>

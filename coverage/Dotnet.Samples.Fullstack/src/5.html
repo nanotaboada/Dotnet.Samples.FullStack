@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Services\BookService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Dotnet.Samples.FullStack.Data;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace Dotnet.Samples.FullStack.Services
+{
+    public class BookService : IBookService
+    {
+        private IRepository&lt;Book&gt; bookRepository;
+        private static readonly string BooksService_RetrieveAllInStock_CacheKey = &quot;BookService_RetrieveAllInStock_CacheKey&quot;;
+
+        public BookService(IRepository&lt;Book&gt; bookRepository)
+        {
+            this.bookRepository = bookRepository;
+        }
+
+        #region Create
+
+        public int Create(Book book)
+        {
+            this.bookRepository.Create(book);
+            return this.bookRepository.SaveChanges();
+        }
+
+        #endregion
+
+        #region Retrieve
+
+        public Book RetrieveByIsbn(string isbn)
+        {
+            // TODO: Discuss this: ISBN is a natural Key of the Book domain but
+            // SqlServer favors int over string values for PKs so we might have
+            // to implement a Guid as PK approach in the future to avoid issues
+            return this.bookRepository.Retrieve(isbn);
+        }
+
+        public List&lt;Book&gt; RetrieveAll()
+        {
+            return this.bookRepository.Retrieve() as List&lt;Book&gt;;
+        }
+
+        public List&lt;Book&gt; RetrieveAllInStock()
+        {
+            return this.bookRepository.Retrieve(book =&gt; book.InStock == true) as List&lt;Book&gt;;
+        }
+
+        public List&lt;Book&gt; RetrieveAllInStockToday()
+        {
+            var books = new List&lt;Book&gt;();
+            var cache = ObjectCacheService.Get&lt;List&lt;Book&gt;&gt;(BooksService_RetrieveAllInStock_CacheKey);
+
+            if (cache != null)
+            {
+                books = cache;
+            }
+            else
+            {
+                books = this.bookRepository.Retrieve(book =&gt; book.InStock == true) as List&lt;Book&gt;;
+                ObjectCacheService.Add(books, BooksService_RetrieveAllInStock_CacheKey);
+            }
+
+            return books;
+        }
+
+        #endregion
+
+        #region Update
+
+        public void Update(Book book)
+        {
+            var current = this.bookRepository.Retrieve(book.Isbn);
+
+            if (current != null)
+            {
+                current = book;
+                this.bookRepository.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region Delete
+
+        public void Delete(string isbn)
+        {
+            this.bookRepository.Delete(isbn);
+            this.bookRepository.SaveChanges();
+        }
+
+        #endregion
+
+        #region Validation
+
+        public bool IsValidIsbn(string isbn)
+        {
+            // https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
+            var pattern = @&quot;
+                ^
+                (?:ISBN(?:-1[03])?:?\ )?    # Optional ISBN/ISBN-10/ISBN-13 identifier.
+                (?=                         # Basic format pre-checks (lookahead):
+                [0-9X]{10}$                 # Require 10 digits/Xs (no separators).
+                |                           # Or:
+                (?=(?:[0-9]+[-\ ]){3})      # Require 3 separators
+                [-\ 0-9X]{13}$              # out of 13 characters total.
+                |                           # Or:
+                97[89][0-9]{10}$            # 978/979 plus 10 digits (13 total).
+                |                           # Or:
+                (?=(?:[0-9]+[-\ ]){4})      # Require 4 separators
+                [-\ 0-9]{17}$               # out of 17 characters total.
+                )                           # End format pre-checks.
+                (?:97[89][-\ ]?)?           # Optional ISBN-13 prefix.
+                [0-9]{1,5}[-\ ]?            # 1-5 digit group identifier.
+                [0-9]+[-\ ]?[0-9]+[-\ ]?    # Publisher and title identifiers.
+                [0-9X]                      # Check digit.
+                $
+                &quot;;
+            var regex = new Regex(pattern, RegexOptions.IgnorePatternWhitespace);
+
+            return regex.IsMatch(isbn);
+        }
+
+        #endregion
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,9,10,125,1],[12,9,12,61,1],[13,9,13,10,1],[14,13,14,50,1],[15,9,15,10,1],[20,9,20,10,1],[21,13,21,46,1],[22,13,22,54,1],[23,9,23,10,1],[30,9,30,10,1],[34,13,34,55,1],[35,9,35,10,1],[38,9,38,10,1],[39,13,39,65,1],[40,9,40,10,1],[43,9,43,10,1],[44,13,44,93,1],[45,9,45,10,1],[48,9,48,10,1],[49,13,49,42,1],[50,13,50,102,1],[52,13,52,31,1],[53,13,53,14,1],[54,17,54,31,1],[55,13,55,14,1],[57,13,57,14,1],[58,17,58,98,1],[59,17,59,89,1],[60,13,60,14,1],[62,13,62,26,1],[63,9,63,10,1],[70,9,70,10,1],[71,13,71,67,1],[73,13,73,33,1],[74,13,74,14,1],[75,17,75,32,1],[76,17,76,51,1],[77,13,77,14,1],[78,9,78,10,1],[85,9,85,10,1],[86,13,86,46,1],[87,13,87,47,1],[88,9,88,10,1],[95,9,95,10,1],[97,13,116,19,1],[117,13,117,82,1],[119,13,119,40,1],[120,9,120,10,1]]);
+    </script>
+  </body>
+</html>
