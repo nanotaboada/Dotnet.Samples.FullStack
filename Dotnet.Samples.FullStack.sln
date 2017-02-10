@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Services.Tests", "Dotnet.Samples.FullStack.Services.Tests\Dotnet.Samples.FullStack.Services.Tests.csproj", "{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Data.Tests", "Dotnet.Samples.FullStack.Data.Tests\Dotnet.Samples.FullStack.Data.Tests.csproj", "{8AE4D724-1257-4FEF-8683-52AFF4007C91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,22 @@ Global
 		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x64.Build.0 = Release|Any CPU
 		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x86.ActiveCfg = Release|Any CPU
 		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x86.Build.0 = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|x64.Build.0 = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Debug|x86.Build.0 = Debug|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|ARM.Build.0 = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|x64.ActiveCfg = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|x64.Build.0 = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|x86.ActiveCfg = Release|Any CPU
+		{8AE4D724-1257-4FEF-8683-52AFF4007C91}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
