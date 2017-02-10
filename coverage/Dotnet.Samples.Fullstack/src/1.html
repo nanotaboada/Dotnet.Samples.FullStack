@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Data.Stubs\BookStub.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Dotnet.Samples.FullStack.Data;
+using FizzWare.NBuilder;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Dotnet.Samples.FullStack.Data.Stubs
+{
+    public static class BookStub
+    {
+        private static Random random = new Random();
+
+        public static Book CreateNew()
+        {
+            return Builder&lt;Book&gt;
+                .CreateNew()
+                    .With(book =&gt; book.Isbn = CreateRandomFakeIsbn())
+                    .With(book =&gt; book.Published = CreateRandomPastDate())
+                    .With(book =&gt; book.Pages = random.Next(0, 1000))
+                    .With(book =&gt; book.InStock = Convert.ToBoolean(random.Next(0, 2)))
+                .Build();
+        }
+
+        public static List&lt;Book&gt; CreateListOfSize(int quantity)
+        {
+            if (quantity &lt; 1)
+            {
+                throw new ArgumentOutOfRangeException(&quot;Quantity should be positive.&quot;);
+            }
+
+            return Builder&lt;Book&gt;
+                .CreateListOfSize(quantity)
+                    .All()
+                        .With(book =&gt; book.Isbn = CreateRandomFakeIsbn())
+                        .With(book =&gt; book.Published = CreateRandomPastDate())
+                        .With(book =&gt; book.Pages = random.Next(0, 1000))
+                        .With(book =&gt; book.InStock = Convert.ToBoolean(random.Next(0, 2)))
+                .Build()
+                    .ToList();
+        }
+
+        public static List&lt;Book&gt; CreateListOfSize(int quantity, bool inStock = true)
+        {
+            if (quantity &lt; 1)
+            {
+                throw new ArgumentOutOfRangeException(&quot;Quantity should be positive.&quot;);
+            }
+
+            return Builder&lt;Book&gt;
+                .CreateListOfSize(quantity)
+                    .All()
+                        .With(book =&gt; book.Isbn = CreateRandomFakeIsbn())
+                        .With(book =&gt; book.Published = CreateRandomPastDate())
+                        .With(book =&gt; book.Pages = random.Next(0, 1000))
+                        .With(book =&gt; book.InStock = inStock)
+                .Build()
+                    .ToList();
+        }
+
+        private static string CreateRandomFakeIsbn()
+        {
+            var ean = &quot;978&quot;;
+            var group = random.Next(0, 2).ToString(&quot;0&quot;);
+            var publisher = random.Next(200, 699).ToString(&quot;000&quot;);
+            var title = random.Next(0, 99999).ToString(&quot;00000&quot;);
+            var check = random.Next(0, 10).ToString(&quot;0&quot;); // Not a real checksum!
+
+            return string.Format(&quot;{0}-{1}-{2}-{3}-{4}&quot;, ean, group, publisher, title, check);
+        }
+
+        private static DateTime CreateRandomPastDate()
+        {
+            var start = new DateTime(1900, 1, 1);
+            var range = ((TimeSpan)(DateTime.Today - start)).Days;
+
+            return start.AddDays(random.Next(range));
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,9,11,53,1],[14,9,14,10,1],[15,13,17,35,1],[17,35,17,69,1],[17,69,18,35,1],[18,35,18,74,1],[18,74,19,35,1],[19,35,19,68,1],[19,68,20,35,1],[20,35,20,86,1],[20,86,21,26,1],[15,13,21,26,1],[22,9,22,10,1],[25,9,25,10,1],[26,13,26,30,1],[27,13,27,14,0],[28,17,28,87,0],[31,13,34,39,1],[34,39,34,73,1],[34,73,35,39,1],[35,39,35,78,1],[35,78,36,39,1],[36,39,36,72,1],[36,72,37,39,1],[37,39,37,90,1],[37,90,39,31,1],[31,13,39,31,1],[40,9,40,10,1],[43,9,43,10,1],[44,13,44,30,1],[45,13,45,14,0],[46,17,46,87,0],[49,13,52,39,1],[52,39,52,73,1],[52,73,53,39,1],[53,39,53,78,1],[53,78,54,39,1],[54,39,54,72,1],[54,72,55,39,1],[55,39,55,61,1],[55,61,57,31,1],[49,13,57,31,1],[58,9,58,10,1],[61,9,61,10,1],[62,13,62,29,1],[63,13,63,57,1],[64,13,64,67,1],[65,13,65,65,1],[66,13,66,58,1],[68,13,68,94,1],[69,9,69,10,1],[72,9,72,10,1],[73,13,73,50,1],[74,13,74,67,1],[76,13,76,54,1],[77,9,77,10,1]]);
+    </script>
+  </body>
+</html>

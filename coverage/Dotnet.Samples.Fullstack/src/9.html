@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Api\SimpleInjectorConfiguration.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Dotnet.Samples.FullStack.Data;
+using Dotnet.Samples.FullStack.Services;
+using Dotnet.Samples.FullStack.Services.Mocks;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+using System.Web.Http;
+
+namespace Dotnet.Samples.FullStack.Api
+{
+    internal static class SimpleInjectorConfiguration
+    {
+        internal static void Configure()
+        {
+            var container = new Container();
+
+            container.Register&lt;IRepository&lt;Book&gt;, BookRepository&gt;(Lifestyle.Singleton);
+#if DEBUG
+            container.Register&lt;IBookService, BookServiceMock&gt;(Lifestyle.Singleton);
+#else
+            container.Register&lt;IBookService, BookService&gt;(Lifestyle.Singleton);
+#endif
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+            // container.Verify();
+
+            GlobalConfiguration.Configuration.DependencyResolver =
+                new SimpleInjectorWebApiDependencyResolver(container);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,9,13,10,0],[14,13,14,45,0],[16,13,16,88,0],[18,13,18,84,0],[22,13,22,84,0],[25,13,26,71,0],[27,9,27,10,0]]);
+    </script>
+  </body>
+</html>

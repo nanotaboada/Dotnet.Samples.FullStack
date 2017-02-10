@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Api\Controllers\BookController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Dotnet.Samples.FullStack.Data;
+using Dotnet.Samples.FullStack.Services;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using System.Web.Http.Results;
+
+namespace Dotnet.Samples.FullStack.Api.Controllers
+{
+    /// &lt;summary&gt;
+    /// ASP.NET Web API 2 Controller for Books.
+    /// &lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// http://www.restapitutorial.com/lessons/httpmethods.html
+    /// https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+    /// &lt;/remarks&gt;
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class BookController : ApiController
+    {
+        private IBookService bookService;
+
+        public BookController(IBookService bookService)
+        {
+            this.bookService = bookService;
+        }
+
+        /// &lt;summary&gt;
+        /// The GET method means retrieve whatever information
+        /// (in the form of an entity) is identified by the Request-URI.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;
+        /// A collection of Books and status code 200 (OK),
+        /// or status code 204 (No Content).
+        /// &lt;/returns&gt;
+        [Route(&quot;api/books&quot;)]
+        public IHttpActionResult Get()
+        {
+            var books = this.bookService.RetrieveAll();
+
+            if (books == null)
+            {
+                return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.NoContent));
+            }
+            else
+            {
+                return Ok(books);
+            }
+
+        }
+
+        /// &lt;summary&gt;
+        /// The POST method is used to request that the origin server accept
+        /// the entity enclosed in the request as a new subordinate of the
+        /// resource identified by the Request-URI in the Request-Line.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;book&quot;&gt;A Book.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A Location header with link to new Book and status code 
+        /// 201 (Created), or status code 409 (Conflict) if the Book already
+        /// exists, or status code 400 (Bad Request) if the ISBN is invalid.
+        /// &lt;/returns&gt;
+        [Route(&quot;api/books&quot;)]
+        public IHttpActionResult Post([FromBody]Book book)
+        {
+            if (!this.bookService.IsValidIsbn(book.Isbn))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var existing = this.bookService.RetrieveByIsbn(book.Isbn);
+
+                if (existing != null)
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    this.bookService.Create(book);
+                    var location = string.Format(&quot;/book/{0}&quot;, book.Isbn);
+                    return Created&lt;Book&gt;(location, book);
+
+                }
+            }
+
+        }
+
+        /// &lt;summary&gt;
+        /// The GET method means retrieve whatever information
+        /// (in the form of an entity) is identified by the Request-URI.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;isbn&quot;&gt;The ISBN of a Book.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A Book matching the provided ISBN and status code 200 (OK),
+        /// or 404 (Not Found) if the ISBN was not found or is invalid.
+        /// &lt;/returns&gt;
+        public IHttpActionResult Get(string isbn)
+        {
+            var book = this.bookService.RetrieveByIsbn(isbn);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(book);
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// The PUT method requests that the enclosed entity be stored under 
+        /// the supplied Request-URI. If the Request-URI refers to an already
+        /// existing resource, the enclosed entity SHOULD be considered as a
+        /// modified version of the one residing on the origin server. If the
+        /// resource could not be created or modified with the Request-URI,
+        /// an appropriate error response SHOULD be given that reflects the
+        /// nature of the problem. 
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;isbn&quot;&gt;The ISBN of a Book.&lt;/param&gt;
+        /// &lt;param name=&quot;book&quot;&gt;A Book.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A status code 204 (No Content) if the Books is successfully updated,
+        /// or 404 (Not Found) if the ISBN was not found,
+        /// or 400 (Bad Request) if the ISBN was invalid.
+        /// &lt;/returns&gt;
+        public IHttpActionResult Put(string isbn, [FromBody]Book book)
+        {
+            if (!this.bookService.IsValidIsbn(isbn)
+                || !this.bookService.IsValidIsbn(book.Isbn)
+                || (isbn != book.Isbn))
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var existing = this.bookService.RetrieveByIsbn(isbn);
+
+                if (existing == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    this.bookService.Update(book);
+                    return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.NoContent));
+                }
+            }
+
+
+        }
+
+        /// &lt;summary&gt;
+        /// The DELETE method requests that the origin server delete the 
+        /// resource identified by the Request-URI.This method MAY be 
+        /// overridden by human intervention(or other means) on the origin 
+        /// server.The client cannot be guaranteed that the operation has been
+        /// carried out, even if the status code returned from the origin server
+        /// indicates that the action has been completed successfully. However,
+        /// the server SHOULD NOT indicate success unless, at the time the
+        /// response is given, it intends to delete the resource or move it to
+        /// an inaccessible location.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;isbn&quot;&gt;The ISBN of a Book.&lt;/param&gt;
+        public IHttpActionResult Delete(string isbn)
+        {
+            if (!this.bookService.IsValidIsbn(isbn))
+            {
+                return NotFound();
+            }
+            else
+            {
+                this.bookService.Delete(isbn);
+                return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.NoContent));
+            }
+
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[23,9,23,56,1],[24,9,24,10,1],[25,13,25,44,1],[26,9,26,10,1],[38,9,38,10,1],[39,13,39,56,1],[41,13,41,31,1],[42,13,42,14,1],[43,17,43,101,1],[46,13,46,14,1],[47,17,47,34,1],[50,9,50,10,1],[65,9,65,10,1],[66,13,66,58,1],[67,13,67,14,1],[68,17,68,37,1],[71,13,71,14,1],[72,17,72,75,1],[74,17,74,38,1],[75,17,75,18,1],[76,21,76,39,1],[79,17,79,18,1],[80,21,80,51,1],[81,21,81,74,1],[82,21,82,58,1],[87,9,87,10,1],[99,9,99,10,1],[100,13,100,62,1],[102,13,102,30,1],[103,13,103,14,1],[104,17,104,35,1],[107,13,107,14,1],[108,17,108,33,1],[110,9,110,10,1],[129,9,129,10,1],[130,13,132,40,1],[133,13,133,14,1],[134,17,134,37,1],[137,13,137,14,1],[138,17,138,70,1],[140,17,140,38,1],[141,17,141,18,1],[142,21,142,39,1],[145,17,145,18,1],[146,21,146,51,1],[147,21,147,105,1],[152,9,152,10,1],[167,9,167,10,1],[168,13,168,53,1],[169,13,169,14,1],[170,17,170,35,1],[173,13,173,14,1],[174,17,174,47,1],[175,17,175,101,1],[178,9,178,10,1]]);
+    </script>
+  </body>
+</html>
