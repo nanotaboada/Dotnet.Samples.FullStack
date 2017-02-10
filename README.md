@@ -1,6 +1,6 @@
 Status
 ------
-N/A
+[![Build status](https://ci.appveyor.com/api/projects/status/1dn9fe187n9d0t8s?svg=true)](https://ci.appveyor.com/project/nanotaboada/dotnet-samples-fullstack)
 
 Manifesto
 ---------
@@ -10,11 +10,11 @@ Manifesto
 
 About
 -----
-Microsoft® .NET™ End-to-end sample project showcasing a variety of technologies, frameworks and libraries.
+Proof of Concept for a full-stack, end-to-end Microsoft® .NET™ solution showcasing a variety of technologies, frameworks and libraries.
 
 Credits
 -------
-The solution has been coded in C# using [Visual Studio Community](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) targeting [.NET Framework 4.5](http://www.microsoft.com/net/) and mostly following [StyleCop](http://www.stylecop.com/) conventions.
+The solution has been coded in C# using [Visual Studio Community 2015 Update 3](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) targeting [.NET Framework 4.6.2](http://www.microsoft.com/net/) and mostly following [StyleCop](http://www.stylecop.com/) conventions.
 
 Terms
 -----
