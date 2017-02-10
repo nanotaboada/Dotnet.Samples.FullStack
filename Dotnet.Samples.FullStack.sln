@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Api.Tests", "Dotnet.Samples.FullStack.Api.Tests\Dotnet.Samples.FullStack.Api.Tests.csproj", "{81ACF34F-EF16-4223-B891-33A7B40F65BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Samples.FullStack.Services.Tests", "Dotnet.Samples.FullStack.Services.Tests\Dotnet.Samples.FullStack.Services.Tests.csproj", "{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,22 @@ Global
 		{81ACF34F-EF16-4223-B891-33A7B40F65BE}.Release|x64.Build.0 = Release|Any CPU
 		{81ACF34F-EF16-4223-B891-33A7B40F65BE}.Release|x86.ActiveCfg = Release|Any CPU
 		{81ACF34F-EF16-4223-B891-33A7B40F65BE}.Release|x86.Build.0 = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|x64.Build.0 = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Debug|x86.Build.0 = Debug|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|ARM.Build.0 = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x64.ActiveCfg = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x64.Build.0 = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{8E8EC3FC-677E-44B7-AC00-9AB0EA31DBA8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
