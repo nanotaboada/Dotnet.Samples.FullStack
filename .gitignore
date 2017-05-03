@@ -41,3 +41,5 @@ _TeamCity*
 
 .DS_Store
 *.DotSettings
+
+packages
