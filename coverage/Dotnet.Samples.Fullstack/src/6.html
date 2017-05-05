@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\src\FullStack\Dotnet.Samples.FullStack\Dotnet.Samples.FullStack.Services\ObjectCacheService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Runtime.Caching;
+
+namespace Dotnet.Samples.FullStack.Services
+{
+    public class ObjectCacheService
+    {
+        private static readonly ObjectCache Cache = MemoryCache.Default;
+        private static readonly CacheItemPolicy Policy = new CacheItemPolicy()
+        {
+            AbsoluteExpiration = DateTime.Now.AddDays(1)
+        };
+
+        internal static T Get&lt;T&gt;(string key) where T : class
+        {
+            try
+            {
+                return (T)Cache[key];
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        internal static void Add(object value, string key)
+        {
+            Cache.Add(key, value, Policy);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,73,1],[9,9,12,11,1],[15,9,15,10,1],[17,13,17,14,1],[18,17,18,38,1],[20,13,20,18,0],[21,13,21,14,0],[22,17,22,29,0],[24,9,24,10,1],[27,9,27,10,1],[28,13,28,43,1],[29,9,29,10,1]]);
+    </script>
+  </body>
+</html>
