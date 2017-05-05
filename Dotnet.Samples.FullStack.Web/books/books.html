@@ -1,0 +1,22 @@
+<table class="table table-hover text-left">
+    <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Published</th>
+            <th>Publisher</th>
+            <th>Pages</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="book in books">
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.published | date:'mediumDate' }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.pages | number }}</td>
+        </tr>
+    </tbody>
+</table>
