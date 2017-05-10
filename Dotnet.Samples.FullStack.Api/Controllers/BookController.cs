@@ -33,7 +33,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// A collection of Books and status code 200 (OK),
         /// or status code 204 (No Content).
         /// </returns>
-        [Route("api/books")]
+        [Route("api/v1/books")]
         public IHttpActionResult Get()
         {
             var books = this.bookService.RetrieveAll();
@@ -60,7 +60,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// 201 (Created), or status code 409 (Conflict) if the Book already
         /// exists, or status code 400 (Bad Request) if the ISBN is invalid.
         /// </returns>
-        [Route("api/books")]
+        [Route("api/v1/books")]
         public IHttpActionResult Post([FromBody]Book book)
         {
             if (!this.bookService.IsValidIsbn(book.Isbn))
@@ -95,6 +95,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// A Book matching the provided ISBN and status code 200 (OK),
         /// or 404 (Not Found) if the ISBN was not found or is invalid.
         /// </returns>
+        [Route("api/v1/book/{isbn}")]
         public IHttpActionResult Get(string isbn)
         {
             var book = this.bookService.RetrieveByIsbn(isbn);
@@ -125,6 +126,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// or 404 (Not Found) if the ISBN was not found,
         /// or 400 (Bad Request) if the ISBN was invalid.
         /// </returns>
+        [Route("api/v1/book/{isbn}")]
         public IHttpActionResult Put(string isbn, [FromBody]Book book)
         {
             if (!this.bookService.IsValidIsbn(isbn)
@@ -163,6 +165,7 @@ namespace Dotnet.Samples.FullStack.Api.Controllers
         /// an inaccessible location.
         /// </summary>
         /// <param name="isbn">The ISBN of a Book.</param>
+        [Route("api/v1/book/{isbn}")]
         public IHttpActionResult Delete(string isbn)
         {
             if (!this.bookService.IsValidIsbn(isbn))
